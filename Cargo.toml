@@ -3,7 +3,7 @@ name = "base_url"
 version = "0.0.5"
 authors = ["Brady McDonough <brady.mcd.codes@gmail.com>"]
 repository = "https://github.com/bradymcd/rs-baseurl"
-lisence = "MIT"
+license = "MIT"
 description = "A Url type which strictly cuts out errors related to parsing and host suitability after creation at the cost of some flexibility"
 
 
