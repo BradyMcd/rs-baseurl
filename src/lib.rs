@@ -2,7 +2,21 @@
 extern crate url;
 extern crate try_from;
 
+use url::{ Url, ParseError };
+
 pub mod base_url;
+
+pub enum UrlError {
+    /// If the Url supplied cannot be a base this error is returned
+    CannotBeBase,
+    ///
+    ParseError( ParseError ),
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct BaseUrl {
+    url:Url,
+}
 
 #[cfg(test)]
 mod tests {

@@ -3,6 +3,10 @@
 /// methods.
 /// This does have the effect of restricting how you can interact with a BaseUrl compared to other Url
 /// since certain methods make no sense when you are definitely dealing with a base-capable url
+
+use UrlError;
+use BaseUrl;
+
 use url::{ Url, ParseError, UrlQuery, PathSegmentsMut };
 use url::form_urlencoded::{Parse, Serializer};
 use try_from::TryFrom;
@@ -13,18 +17,6 @@ use std::str::Split;
 use std::convert::Into;
 use std::net::IpAddr;
 use std::fmt::{Formatter, Display, Result as FormatResult};
-
-pub enum UrlError {
-    /// If the Url supplied cannot be a base this error is returned
-    CannotBeBase,
-    ///
-    ParseError( ParseError ),
-}
-
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct BaseUrl {
-    url:Url,
-}
 
 /* TODO:Missing traits
  * AsRef
