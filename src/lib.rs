@@ -6,6 +6,7 @@ use url::{ Url, ParseError };
 
 pub mod base_url;
 
+#[derive(Debug)]
 pub enum UrlError {
     /// If the Url supplied cannot be a base this error is returned
     CannotBeBase,
