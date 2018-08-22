@@ -2,7 +2,7 @@
 extern crate url;
 extern crate try_from;
 
-use url::{ Url, ParseError };
+pub use url::{ Url, ParseError };
 
 pub mod base_url;
 

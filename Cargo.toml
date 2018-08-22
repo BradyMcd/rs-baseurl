@@ -8,5 +8,5 @@ description = "A Url type which strictly cuts out errors related to parsing and 
 
 
 [dependencies]
-url="1.7.0"
-try_from="0.2.2"
+url = "^1.0.0"
+try_from = "0.2.2"
