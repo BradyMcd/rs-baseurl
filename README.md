@@ -12,10 +12,12 @@ In any Rust project managed by Cargo add the following to your Cargo.toml ```[de
 ```
 base_url="0.0.6"
 ```
-The package exposes a single package, base_url which defines the BaseUrl structure at it's root
+The package exposes base_url which defines the BaseUrl structure at it's root and also re-exports the 
+rust-url crate
 ```rust
 extern crate base_url;
 use base_url::BaseUrl;
+use base_url::Url;
 ```
 BaseUrl can be created by converting from a String or a Url, these conversions are implemented using
 the traits found in the [try_from](https://crates.io/crates/try_from) crate.
@@ -29,5 +31,8 @@ changes where fewer (or no) errors are possible.
 Tests should also be added, even though this is mostly just a thin wrapper over the Url type proving
 that CannotBeBase errors are truly gone when using the library is something which should be done  
 Finally there are some functions which are still missing, anything which requires me to reimplement the ```parse()```
-function isn't being touched until I really need to, notably ```join()``` isn't available yet.
+function isn't being touched until I really need to, notably ```join()``` isn't available yet.  
+Some of the nominclature also needs to be changed to better reflect what the two Error types are in
+reference to, specifically the UrlError type is going to change since we're re-exporting Url and it
+has nothing to do with that crate.
 
