@@ -26,7 +26,7 @@ the traits found in the [try_from](https://crates.io/crates/try_from) crate.
 
 This is at version 0.0.7 for a reason, there are things to be added before I'm comfortable claiming 
 this library is at a proper first version.  
-Tests should also added, even though this is mostly just a thin wrapper over the Url type proving
+Tests should be added, even though this is mostly just a thin wrapper over the Url type proving
 that CannotBeBase errors are truly gone when using the library is something which should be done  
 Finally there are some functions which are still missing, anything which requires me to reimplement the ```parse()```
 function isn't being touched until I really need to, notably ```join()``` isn't available yet.  
