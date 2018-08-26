@@ -10,7 +10,7 @@ creation. As such, a BaseUrl never fails when doing things like calling ```set_p
 
 In any Rust project managed by Cargo add the following to your Cargo.toml ```[dependencies]``` section:
 ```
-base_url="0.0.6"
+base_url="0.0.7"
 ```
 The package exposes base_url which defines the BaseUrl structure at it's root and also re-exports the 
 rust-url crate
@@ -24,7 +24,7 @@ the traits found in the [try_from](https://crates.io/crates/try_from) crate.
 
 ## What's Missing?
 
-This is at version 0.0.6 for a reason, there are things to be added before I'm comfortable claiming 
+This is at version 0.0.7 for a reason, there are things to be added before I'm comfortable claiming 
 this library is at a proper first version.  
 Documentation for one, is missing. Mostly that will just be copied from the main Url crate with some
 changes where fewer (or no) errors are possible.  

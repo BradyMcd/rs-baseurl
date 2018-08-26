@@ -1,6 +1,6 @@
 [package]
 name = "base_url"
-version = "0.0.6"
+version = "0.0.7"
 authors = ["Brady McDonough <brady.mcd.codes@gmail.com>"]
 repository = "https://github.com/bradymcd/rs-baseurl"
 license = "MIT"
