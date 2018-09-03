@@ -54,7 +54,6 @@ use try_from::TryFrom;
 pub use url::{ Host };
 
 use std::str::Split;
-use std::convert::Into;
 use std::net::IpAddr;
 use std::fmt::{Formatter, Display, Result as FormatResult};
 
