@@ -30,7 +30,4 @@ Tests should be added, even though this is mostly just a thin wrapper over the U
 that CannotBeBase errors are truly gone when using the library is something which should be done  
 Finally there are some functions which are still missing, anything which requires me to reimplement the ```parse()```
 function isn't being touched until I really need to, notably ```join()``` isn't available yet.  
-Some of the nominclature also needs to be changed to better reflect what the two Error types are in
-reference to, specifically the UrlError type is going to change since we're re-exporting Url and it
-has nothing to do with that crate.
 
