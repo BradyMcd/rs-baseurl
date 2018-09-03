@@ -10,10 +10,10 @@ creation. As such, a BaseUrl never fails when doing things like calling ```set_p
 
 In any Rust project managed by Cargo add the following to your Cargo.toml ```[dependencies]``` section:
 ```
-base_url="0.0.7"
+base_url="0.0.8"
 ```
 The package exposes base_url which defines the BaseUrl structure at it's root and also re-exports the 
-rust-url crate
+content of the rust-url crate
 ```rust
 extern crate base_url;
 use base_url::BaseUrl;
@@ -24,7 +24,7 @@ the traits found in the [try_from](https://crates.io/crates/try_from) crate.
 
 ## What's Missing?
 
-This is at version 0.0.7 for a reason, there are things to be added before I'm comfortable claiming 
+This is at version 0.0.8 for a reason, there are things to be added before I'm comfortable claiming 
 this library is at a proper first version.  
 Tests should be added, even though this is mostly just a thin wrapper over the Url type proving
 that CannotBeBase errors are truly gone when using the library is something which should be done  
