@@ -20,7 +20,7 @@ version = "^0.3.0"
 optional = true
 
 [features]
-default = ["robot_conversion", "sitemap_conversion"]
+default = []
 robot_conversion = ["robotparser", "_conversion_any"]
 sitemap_conversion = ["sitemap", "_conversion_any"]
 _conversion_any = [] ##Internal use only
