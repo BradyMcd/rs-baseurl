@@ -1,8 +1,9 @@
 /*!
 
 base_url is a thin wrapper around [rust-url](https://github.com/servo/rust-url), which itself
-implements the [URL Standard](https://url.spec.whatwg.org/). The goal of base_url is to remove
-redundant error checks related to the base-suitability of a given URL.
+implements the [URL Standard](https://url.spec.whatwg.org/). The goal of base_url is to implement
+a strict subset of that standard to remove redundant error checks related to the base-suitability of a
+given URL.
 
 
 # Acquiring a BaseUrl object
