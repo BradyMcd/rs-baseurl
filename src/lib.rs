@@ -41,10 +41,13 @@ admitting potential failures
 */
 
 pub extern crate url;
-extern crate try_from;
+pub extern crate try_from;
 
-#[cfg( feature = "_conversion_any" )]
-pub mod conversions;
+#[cfg( feature = "robot_conversion" )]
+pub mod robotparser;
+
+#[cfg( feature = "sitemap_conversion" )]
+pub mod sitemap;
 
 pub use url::{ Url, ParseError };
 
