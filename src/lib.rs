@@ -41,7 +41,11 @@ admitting potential failures
 */
 
 pub extern crate url;
+
+#[cfg( all( feature = "_try_from", not( feature = "nightly" ) ) )]
 pub extern crate try_from;
+#[cfg( all( feature = "_try_from", not( feature = "nightly" ) ) )]
+pub use try_from::TryFrom;
 
 #[cfg( feature = "robot_conversion" )]
 pub mod robotparser;
@@ -53,8 +57,6 @@ pub use url::{ Url, ParseError };
 
 use url::{ UrlQuery, PathSegmentsMut };
 use url::form_urlencoded::{Parse, Serializer};
-use try_from::TryFrom;
-
 pub use url::{ Host };
 
 use std::str::Split;
@@ -75,33 +77,55 @@ pub enum BaseUrlError {
 /// Any Url which has a host and so can be supplied as a base url
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct BaseUrl {
-    url:Url,
+    url: Url,
 }
 
 impl From<BaseUrl> for Url {
-    fn from( url:BaseUrl ) -> Url {
+    fn from( url: BaseUrl ) -> Self {
         url.url
     }
 }
 
+#[cfg( any( feature = "_try_from", feature = "nightly" ) )]
 impl TryFrom<Url> for BaseUrl {
     type Err = BaseUrlError;
-    fn try_from( url:Url ) -> Result< BaseUrl, Self::Err > {
+    fn try_from( url: Url ) -> Result< Self, Self::Err > {
         if url.cannot_be_a_base( ) {
             Err( BaseUrlError::CannotBeBase )
         } else {
-            Ok( BaseUrl{ url:url } )
+            Ok( BaseUrl{ url: url } )
         }
     }
 }
 
+#[cfg( any( feature = "_try_from", feature = "nightly" ) )]
 impl<'a> TryFrom<&'a str> for BaseUrl {
     type Err = BaseUrlError;
 
-    fn try_from( url:&'a str ) -> Result< BaseUrl, Self::Err > {
+    fn try_from( url: &'a str ) -> Result< Self, Self::Err > {
         match Url::parse( url ) {
             Ok( u ) => BaseUrl::try_from( u ),
             Err( e ) => Err( BaseUrlError::ParseError( e ) ),
+        }
+    }
+}
+
+impl From<Url> for BaseUrl {
+    fn from( url: Url ) -> Self {
+        if url.cannot_be_a_base( ) {
+            panic!()
+        }else{
+            BaseUrl{ url: url }
+        }
+    }
+}
+
+///This is a fallible conversion
+impl<'a> From<&'a str> for BaseUrl {
+    fn from( url: &'a str ) -> Self {
+        match Url::parse( url ) {
+            Ok( u ) => BaseUrl::from( u ),
+            Err( _e ) => panic!(),
         }
     }
 }
