@@ -110,6 +110,7 @@ impl<'a> TryFrom<&'a str> for BaseUrl {
     }
 }
 
+/// This is a fallible conversion and CAN panic
 impl From<Url> for BaseUrl {
     fn from( url: Url ) -> Self {
         if url.cannot_be_a_base( ) {
@@ -120,7 +121,7 @@ impl From<Url> for BaseUrl {
     }
 }
 
-///This is a fallible conversion
+/// This is a fallible conversion and CAN panic
 impl<'a> From<&'a str> for BaseUrl {
     fn from( url: &'a str ) -> Self {
         match Url::parse( url ) {
