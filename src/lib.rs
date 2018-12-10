@@ -13,7 +13,7 @@ If a &str cannot be parsed into a Url object a BaseUrlError::ParseError will be 
 underlying ParseError type implemented by rust-url.
 
 ```
-use base_url::{ BaseUrl, BaseUrlError, Url, ParseError };
+use base_url::{ BaseUrl, BaseUrlError, Url, ParseError, TryFrom };
 
 assert!( BaseUrl::try_from( "http://[:::1]" ) == Err( BaseUrlError::ParseError( ParseError::InvalidIpv6Address ) ) );
 ```
@@ -23,12 +23,12 @@ converting that object into a BaseUrl, allowing you to deal with errors related 
 from errors related to base suitability.
 
 ```
-use base_url::{ BaseUrl, BaseUrlError, Url };
+use base_url::{ BaseUrl, BaseUrlError, Url, TryFrom };
 
 # fn run( ) -> Result< (), BaseUrlError > {
 let url:Url = Url::parse( "data:text/plain,Hello?World#" )?;
 
-assert!( BaseUrl::try_from( url ) == BaseUrlError::CannotBeBase );
+assert!( BaseUrl::try_from( url ) == Err( BaseUrlError::CannotBeBase ) );
 # Ok( () )
 # }
 # run( );
@@ -66,7 +66,7 @@ use std::fmt::{Formatter, Display, Result as FormatResult};
 /// A representation of the origin of a BaseUrl
 pub type OriginTuple = ( String, Host<String>, u16 );
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum BaseUrlError {
     /// If the Url supplied cannot be a base this error is returned
     CannotBeBase,
@@ -131,6 +131,12 @@ impl<'a> From<&'a str> for BaseUrl {
     }
 }
 
+impl From< ParseError > for BaseUrlError {
+    fn from( err:ParseError ) -> Self {
+        BaseUrlError::ParseError( err )
+    }
+}
+
 impl BaseUrl {
 
     /// Return the serialization of this BaseUrl
@@ -140,10 +146,9 @@ impl BaseUrl {
     /// # Examples
     ///
     /// ```rust
-    /// use base_url::{ BaseUrl, Url };
-    ///# use base_url::{ BaseUrlError };
+    /// use base_url::{ BaseUrl, BaseUrlError, Url, TryFrom };
     ///# fn run( ) -> Result< (), BaseUrlError > {
-    /// let url_str = "https://example.org/"
+    /// let url_str = "https://example.org/";
     /// let host = BaseUrl::try_from( url_str )?;
     /// assert_eq!( host.as_str( ), url_str );
     ///# Ok( () )
@@ -160,12 +165,11 @@ impl BaseUrl {
     ///
     /// # Examples
     /// ```rust
-    /// use base_url::BaseUrl;
-    ///# use base_url::{ ParseError };
+    /// use base_url::{ BaseUrl, BaseUrlError, Url, ParseError, TryFrom };
     ///# fn run( ) -> Result< (), BaseUrlError > {
-    /// let url_str = "https://example.org/"
+    /// let url_str = "https://example.org/";
     /// let host = BaseUrl::try_from( url_str )?;
-    /// assert_eq!( host.into_string, url_str );
+    /// assert_eq!( host.into_string( ), url_str );
     ///# Ok( () )
     ///# }
     ///# run( );
@@ -180,10 +184,10 @@ impl BaseUrl {
     /// # Examples
     ///
     /// ```rust
-    /// use base_url::{ BaseUrl, OriginTuple, Host };
+    /// use base_url::{ BaseUrl, OriginTuple, Host, TryFrom };
     ///# use base_url::BaseUrlError;
     ///# fn run( ) -> Result< (), BaseUrlError > {
-    /// let url = BaseUrl::try_from( "ftp://example.org/foo" );
+    /// let url = BaseUrl::try_from( "ftp://example.org/foo" )?;
     ///
     /// assert_eq!( url.origin( ),
     ///             ( "ftp".into( ),
@@ -209,11 +213,10 @@ impl BaseUrl {
     /// # Examples
     ///
     /// ```rust
-    /// use base_url::BaseUrl;
-    ///# use base_url::BaseUrlError;
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
     ///# fn run( ) -> Result< (), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://example.org" )?;
-    /// assert_eq!( url.scheme, "https".into( ) );
+    /// assert_eq!( url.scheme( ), "https" );
     ///# Ok( () )
     ///# }
     ///# run( );
