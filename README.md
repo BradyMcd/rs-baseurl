@@ -42,8 +42,7 @@ Each of these features adds a conversion into the important types of the crates 
 ```sitemap``` respectively.
 
 If you wish to add your own conversions (for a crate you don't own at least), look at those 
-implementations given in ```src/conversions.rs``` as well as the dependency hierarchy in 
-```Cargo.toml```
+implementations given in ```src/robotparser.rs``` and ```src/sitemap.rs```
 
 ## What's Missing?
 
