@@ -225,14 +225,62 @@ impl BaseUrl {
         self.url.scheme( )
     }
 
-    //TODO: Examples below this point
+    /// Strip out any present username, password, query and fragment information from this BaseUrl
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< (), BaseUrlError > {
+    /// let mut url = BaseUrl::try_from( "http://brady:hunter3@example.org/foo?query=1#fragment=2" )?;
+    /// url.strip( );
+    /// assert_eq!( url.as_str( ), "http://example.org/foo" );
+    ///# Ok( () )
+    ///# }
+    ///# run( );
+    /// ```
+   pub fn strip( &mut self ) {
+        self.set_username( "" );
+        self.set_password( None );
+        self.set_query( None );
+        self.set_fragment( None );
+    }
+
+    /// Strips a BaseUrl down to only the host and scheme.
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< (), BaseUrlError > {
+    /// let mut url = BaseUrl::try_from( "http://brady:hunter3@example.org:8080/foo?query=1#fragment=2" )?;
+    /// url.make_host_only( );
+    /// assert_eq!( url.as_str( ), "http://example.org/" );
+    ///# Ok( () )
+    ///# }
+    ///# run( );
+    /// ```
+    pub fn make_host_only( &mut self ) {
+        self.strip( );
+        self.set_path( "" );
+        self.set_port( None );
+    }
+
 
     /// Set the BaseUrl's scheme
     ///
     /// Does nothing and returns Err() if the specified scheme does not match the regular expression
     /// [a-zA-Z][a-zA-Z0-9+.-]+
     ///
-    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let mut url = BaseUrl::try_from( "http://example.org/" )?;
+    /// url.set_scheme( "https" );
+    /// assert_eq!( url.as_str( ), "https://example.org/" );
+    ///# Ok( () )
+    ///# }
+    ///# run( );
+    /// ```
     pub fn set_scheme( &mut self, scheme: &str ) -> Result< (), () > {
         self.url.set_scheme( scheme )
     }

@@ -34,3 +34,20 @@ impl From< BaseUrl > for UrlEntry {
     }
 }
 
+mod tests{
+
+    use BaseUrl;
+    use try_from::TryFrom;
+
+    use sitemap::*;
+
+    #[test]
+    fn conversion_invariant_location( ) {
+        let url = match BaseUrl::try_from( "https://www.example.org" ) {
+            Ok( u ) => u,
+            Err( _e ) => panic!( )
+        };
+
+        assert!( url.as_str( ) == Location::from( url.clone( ) ).get_url( ).unwrap( ).as_str( ) );
+    }
+}
