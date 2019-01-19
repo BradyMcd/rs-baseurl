@@ -239,7 +239,7 @@ impl BaseUrl {
     ///# }
     ///# run( );
     /// ```
-   pub fn strip( &mut self ) {
+    pub fn strip( &mut self ) {
         self.set_username( "" );
         self.set_password( None );
         self.set_query( None );
@@ -462,13 +462,5 @@ impl BaseUrl {
 impl Display for BaseUrl {
     fn fmt( &self, formatter: &mut Formatter ) -> FormatResult {
         self.url.fmt( formatter )
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
     }
 }
