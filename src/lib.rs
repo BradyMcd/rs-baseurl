@@ -1,3 +1,4 @@
+//:393
 /*!
 
 base_url is a thin wrapper around [rust-url](https://github.com/servo/rust-url), which itself
@@ -389,7 +390,7 @@ impl BaseUrl {
     pub fn host_str( &self ) -> &str {
         self.url.host_str( ).unwrap( )
     }
-
+    //NOTE NOTE NOTE: STUBS AHEAD
     /// Returns the host for this BaseUrl in an enumerated type.
     ///
     /// # Examples
