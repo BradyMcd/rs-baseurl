@@ -247,6 +247,7 @@ impl BaseUrl {
     }
 
     /// Strips a BaseUrl down to only the host and scheme.
+    ///
     /// # Examples
     ///
     /// ```rust
@@ -271,6 +272,8 @@ impl BaseUrl {
     /// Does nothing and returns Err() if the specified scheme does not match the regular expression
     /// [a-zA-Z][a-zA-Z0-9+.-]+
     ///
+    /// # Examples
+    ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
@@ -287,28 +290,83 @@ impl BaseUrl {
 
     /// Return the username for this BaseUrl. If no username is set an empty string is returned
     ///
+    /// # Examples
     ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "https://brady@example.org/foo" )?;
+    /// assert_eq!( url.username( ), "brady" );
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
     pub fn username( &self ) -> &str {
         self.url.username( )
     }
 
     /// Change the username of this BaseUrl.
     ///
+    /// # Examples
     ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let mut url = BaseUrl::try_from( "http://example.org/" )?;
+    /// url.set_username( "brady" );
+    /// assert_eq!( url.as_str( ), "http://brady@example.org/" );
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
     pub fn set_username( &mut self, username:&str ) {
         self.url.set_username( username ).expect( "The impossible happened" );
     }
 
     /// Optionally returns the password associated with this BaseUrl as a percent-encoded ASCII string.
     ///
+    /// # Examples
     ///
+    /// ```rust
+    /// use base_url::{ Baseurl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    ///# Ok( () )
+    /// let url = BaseUrl::try_from( "https://brady:hunter3@example.org/" )?;
+    /// assert_eq!( url.password( ), Some( "hunter3" ) );
+    ///
+    ///# }
+    ///# run( );
+    /// ```
+    ///
+    /// ```rust
+    /// use base_url{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "https://example.org/" )?;
+    /// assert( url.password( ).is_none( ) );
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
     pub fn password( &self ) -> Option< &str > {
         self.url.password( )
     }
 
     /// Change the password of this BaseUrl. Use None to remove the password field.
     ///
+    /// # Examples
     ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let mut url = BaseUrl::try_from( "http://brady@example.org/" )?;
+    /// url.set_password( Some( "hunter3" ) );
+    /// assert_eq!( url.as_str( ), "http://brady:hunter3@example.org/" );
+    /// url.set_password( None );
+    /// assert_eq!( url.password( ), None );
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
     pub fn set_password( &mut self, password:Option< &str > ) {
         self.url.set_password( password ).expect( "The impossible happened" );
     }
@@ -317,14 +375,35 @@ impl BaseUrl {
     ///
     /// See also the host() method
     ///
+    /// # Examples
     ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "http://brady@example.org/foo" )?;
+    /// assert_eq!( url.host_str( ), "example.org" );
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
     pub fn host_str( &self ) -> &str {
         self.url.host_str( ).unwrap( )
     }
 
     /// Returns the host for this BaseUrl in an enumerated type.
     ///
+    /// # Examples
     ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn host( &self ) -> Host< &str > {
         self.url.host( ).unwrap( )
     }
@@ -332,7 +411,18 @@ impl BaseUrl {
     /// Changes the host for this BaseUrl. If there is any error parsing the provided string no action
     /// is taken and Err() is returned
     ///
+    /// # Examples
     ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn set_host( &mut self, host:&str ) -> Result< (), () > {
         match self.url.set_host( Some( host ) ) {
             Ok( _ ) => Ok( () ),
@@ -343,8 +433,18 @@ impl BaseUrl {
     /// Change this BaseUrl's host to the given Ip address.
     ///
     /// This skips the parsing step compared to calling set_host()
+    /// # Examples
     ///
-    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+    
     pub fn set_ip_host( &mut self, address:IpAddr ) {
         self.url.set_ip_host( address ).expect( "The impossible occurred" );
     }
@@ -352,12 +452,36 @@ impl BaseUrl {
     /// Return's the domain string of this BaseUrl. Returns None if the host is an Ip address rather
     /// than a domain name.
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn domain( &self ) -> Option< &str > {
         self.url.domain( )
     }
 
     /// Optionally return's the port number of this BaseUrl.
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn port( &self ) -> Option< u16 > {
         self.url.port( )
     }
@@ -365,12 +489,36 @@ impl BaseUrl {
     /// Return's the port number of this BaseUrl. If no port number is present a guess is made based
     /// on the scheme, if no guess can be made None is returned.
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn port_or_known_default( &self ) -> Option< u16 > {
         self.url.port_or_known_default( )
     }
 
     /// Change this BaseUrl's port.
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn set_port( &mut self, port:Option< u16 > ) {
         self.url.set_port( port ).expect( "The impossible happened" )
     }
@@ -378,6 +526,18 @@ impl BaseUrl {
     /// Return's the path of this BaseUrl, percent-encoded. Path strings will start with '/' and
     /// continue with '/' separated path segments.
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn path( &self ) -> &str {
         self.url.path( )
     }
@@ -385,6 +545,18 @@ impl BaseUrl {
     /// Return's an iterator through each of this BaseUrl's path segments. Path segments do not contain
     /// the separating '/' characters and may be empty, often on the last entry.
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn path_segments( &self ) -> Split<char> {
         self.url.path_segments( ).unwrap( )
     }
@@ -392,6 +564,18 @@ impl BaseUrl {
     /// Change this BaseUrl's path
     ///
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn set_path( &mut self, path:&str ) {
         self.url.set_path( path )
     }
@@ -400,6 +584,18 @@ impl BaseUrl {
     /// Returns an object with methods to manipulate this BaseUrl's path segments.
     ///
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn path_segments_mut( &mut self ) -> PathSegmentsMut {
         self.url.path_segments_mut( ).unwrap( )
     }
@@ -407,6 +603,18 @@ impl BaseUrl {
     /// Optionally return's this BaseUrl's percent-encoded query string.
     ///
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn query( &self ) -> Option< &str > {
         self.url.query( )
     }
@@ -414,6 +622,18 @@ impl BaseUrl {
     /// Parse the BaseUrl's query string and return an iterator over all found (key, value) pairs.
     ///
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn query_pairs( &self ) -> Parse {
         self.url.query_pairs( )
     }
@@ -421,6 +641,18 @@ impl BaseUrl {
     /// Change this BaseUrl's query string.
     ///
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn set_query( &mut self, query:Option<&str> ) {
         self.url.set_query( query )
     }
@@ -429,6 +661,18 @@ impl BaseUrl {
     /// BaseUrl as a sequence of (key, value) pairs.
     ///
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
+
+
     pub fn query_pairs_mut( &mut self ) -> Serializer< UrlQuery > {
         self.url.query_pairs_mut( )
     }
@@ -436,6 +680,16 @@ impl BaseUrl {
     /// Optionally returns this BaseUrl's fragment identifier.
     ///
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
     pub fn fragment( &self ) -> Option< &str > {
         self.url.fragment( )
     }
@@ -447,15 +701,19 @@ impl BaseUrl {
     ///
     /// This is often not sent to the server where it is used in http: and similar schemes.
     ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
+    /// let url = BaseUrl::try_from( "" )?;
+    ///# Ok( () );
+    ///# }
+    ///# run( );
+    /// ```
     pub fn set_fragment( &mut self, fragment:Option<&str> ) {
         self.url.set_fragment( fragment )
     }
-
-    /* TODO: possibly
-    pub fn with_default_port <F> ( &self, f:F ) -> Result<HostAndPort<&str>>
-     */
-
-
 
 }
 
