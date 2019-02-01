@@ -1,4 +1,3 @@
-//:625 :571
 /*!
 
 base_url is a thin wrapper around [rust-url](https://github.com/servo/rust-url), which itself
@@ -148,9 +147,11 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, Url, TryFrom };
+    ///
     ///# fn run( ) -> Result< (), BaseUrlError > {
     /// let url_str = "https://example.org/";
     /// let host = BaseUrl::try_from( url_str )?;
+    ///
     /// assert_eq!( host.as_str( ), url_str );
     ///# Ok( () )
     ///# }
@@ -167,9 +168,11 @@ impl BaseUrl {
     /// # Examples
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, Url, ParseError, TryFrom };
+    ///
     ///# fn run( ) -> Result< (), BaseUrlError > {
     /// let url_str = "https://example.org/";
     /// let host = BaseUrl::try_from( url_str )?;
+    ///
     /// assert_eq!( host.into_string( ), url_str );
     ///# Ok( () )
     ///# }
@@ -187,6 +190,7 @@ impl BaseUrl {
     /// ```rust
     /// use base_url::{ BaseUrl, OriginTuple, Host, TryFrom };
     ///# use base_url::BaseUrlError;
+    ///
     ///# fn run( ) -> Result< (), BaseUrlError > {
     /// let url = BaseUrl::try_from( "ftp://example.org/foo" )?;
     ///
@@ -215,8 +219,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< (), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://example.org" )?;
+    ///
     /// assert_eq!( url.scheme( ), "https" );
     ///# Ok( () )
     ///# }
@@ -232,8 +238,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< (), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "http://brady:hunter3@example.org/foo?query=1#fragment=2" )?;
+    ///
     /// url.strip( );
     /// assert_eq!( url.as_str( ), "http://example.org/foo" );
     ///# Ok( () )
@@ -253,8 +261,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< (), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "http://brady:hunter3@example.org:8080/foo?query=1#fragment=2" )?;
+    ///
     /// url.make_host_only( );
     /// assert_eq!( url.as_str( ), "http://example.org/" );
     ///# Ok( () )
@@ -277,8 +287,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "http://example.org/" )?;
+    ///
     /// url.set_scheme( "https" );
     /// assert_eq!( url.as_str( ), "https://example.org/" );
     ///# Ok( () )
@@ -295,8 +307,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://brady@example.org/foo" )?;
+    ///
     /// assert_eq!( url.username( ), "brady" );
     ///# Ok( () )
     ///# }
@@ -312,8 +326,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "http://example.org/" )?;
+    ///
     /// url.set_username( "brady" );
     /// assert_eq!( url.as_str( ), "http://brady@example.org/" );
     ///# Ok( () )
@@ -330,20 +346,13 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://brady:hunter3@example.org/" )?;
     /// assert_eq!( url.password( ), Some( "hunter3" ) );
     ///
-    ///# Ok( () )
-    ///# }
-    ///# run( );
-    /// ```
-    ///
-    /// ```rust
-    /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
-    ///# fn run( ) -> Result< ( ), BaseUrlError > {
-    /// let url = BaseUrl::try_from( "https://example.org/" )?;
-    /// assert!( url.password( ).is_none( ) );
+    /// let url - BaseUrl::try_from( "https://brady@example.org" )?;
+    /// assert_eq!( url.password( ), None );
     ///# Ok( () )
     ///# }
     ///# run( );
@@ -358,10 +367,13 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "http://brady@example.org/" )?;
+    ///
     /// url.set_password( Some( "hunter3" ) );
     /// assert_eq!( url.as_str( ), "http://brady:hunter3@example.org/" );
+    ///
     /// url.set_password( None );
     /// assert_eq!( url.password( ), None );
     ///# Ok( () )
@@ -380,6 +392,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "http://brady@example.org/foo" )?;
     /// assert_eq!( url.host_str( ), "example.org" );
@@ -398,10 +411,12 @@ impl BaseUrl {
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom, Host };
     /// use std::net::Ipv4Addr;
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "http://example.org/" )?;
-    /// let ip = BaseUrl::try_from( "http://127.0.0.1/index.html" )?;
     /// assert_eq!( url.host( ), Host::Domain( "example.org" ) );
+    ///
+    /// let ip = BaseUrl::try_from( "http://127.0.0.1/index.html" )?;
     /// assert_eq!( ip.host( ), Host::Ipv4( Ipv4Addr::new( 127, 0, 0, 1 ) ) );
     ///# Ok( () )
     ///# }
@@ -419,8 +434,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "http://example.org/" )?;
+    ///
     /// assert!( url.set_host( "rust-lang.org" ).is_ok( ) );
     /// assert_eq!( url.as_str( ), "http://rust-lang.org/" );
     ///# Ok( () )
@@ -431,6 +448,7 @@ impl BaseUrl {
     /// # Errors
     ///
     /// If the provided host string cannot be parsed a ParseError variant is returned.
+    ///
     pub fn set_host( &mut self, host:&str ) -> Result< (), ParseError > {
         match self.url.set_host( Some( host ) ) {
             Ok( _ ) => Ok( () ),
@@ -448,8 +466,10 @@ impl BaseUrl {
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
     /// use std::net::{ IpAddr, Ipv4Addr };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "https://example.org/" )?;
+    ///
     /// url.set_ip_host( IpAddr::V4( Ipv4Addr::new( 127, 0, 0, 1 ) ) );
     /// assert_eq!( url.as_str( ), "https://127.0.0.1/" );
     ///# Ok( () )
@@ -469,10 +489,12 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let ip = BaseUrl::try_from( "https://127.0.0.1" )?;
-    /// let url = BaseUrl::try_from( "https://www.example.org/" )?;
     /// assert!( ip.domain( ).is_none( ) );
+    ///
+    /// let url = BaseUrl::try_from( "https://www.example.org/" )?;
     /// assert_eq!( url.domain( ), Some( "www.example.org" ) );
     ///# Ok( () )
     ///# }
@@ -490,13 +512,17 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "http://example.org/" )?;
-    /// let url_and_port = BaseUrl::try_from( "https://example.org:42/" )?;
-    /// let url_and_default_port = BaseUrl::try_from( "https://example.org:443/" )?;
     /// assert!( url.port( ).is_none( ) );
-    /// assert_eq!( url_and_port.port( ), Some( 42 ) );
-    /// assert!( url_and_default_port.port( ).is_none( ) );
+    ///
+    /// let url = BaseUrl::try_from( "https://example.org:42/" )?;
+    /// assert_eq!( url.port( ), Some( 42 ) );
+    ///
+    /// let url = BaseUrl::try_from( "https://example.org:443/" )?;
+    /// assert!( url.port( ).is_none( ) );
+    ///
     ///# Ok( () )
     ///# }
     ///# run( );
@@ -520,11 +546,11 @@ impl BaseUrl {
     /// let url = BaseUrl::try_from( "http://example.org/" )?;
     /// assert_eq!( url.port_or_known_default( ), Some( 80 ) );
     ///
-    /// let shell = BaseUrl::try_from( "ssh://example.org/" )?;
-    /// assert_eq!( shell.port_or_known_default( ), None );
+    /// let url = BaseUrl::try_from( "ssh://example.org/" )?;
+    /// assert_eq!( url.port_or_known_default( ), None );
     ///
-    /// let something_else = BaseUrl::try_from( "foo://example.org:42" )?;
-    /// assert_eq!( something_else.port_or_known_default( ), Some( 42 ) );
+    /// let url = BaseUrl::try_from( "foo://example.org:42" )?;
+    /// assert_eq!( url.port_or_known_default( ), Some( 42 ) );
     ///# Ok( () )
     ///# }
     ///# run( );
@@ -540,8 +566,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "https://example.org" )?;
+    ///
     /// url.set_port( Some( 443 ) );
     /// assert!( url.port( ).is_none( ) );
     ///
@@ -562,6 +590,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://example.org/index.html" )?;
     /// assert_eq!( url.path( ), "/index.html" );
@@ -583,6 +612,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://example.org" )?;
     /// let mut path_segments = url.path_segments( );
@@ -610,8 +640,10 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "https://example.org/something/foo.html" )?;
+    ///
     /// url.set_path( "/foobar" );
     /// assert_eq!( url.as_str( ), "https://example.org/foobar" );
     ///# Ok( () )
@@ -632,6 +664,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "https://example.org/" )?;
     ///
@@ -654,6 +687,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://example.org/foo" )?;
     /// assert_eq!( url.query( ), None );
@@ -676,6 +710,7 @@ impl BaseUrl {
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
     /// use std::borrow::Cow;
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://example.org/foo?page=2&sort=newest" )?;
     /// let mut queries = url.query_pairs( );
@@ -697,6 +732,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "https://example.org/foo" )?;
     ///
@@ -720,6 +756,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "https://example.org/foo?page=2" )?;
     ///
@@ -743,8 +780,8 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
-    ///# fn run( ) -> Result< ( ), BaseUrlError > {
     ///
+    ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let url = BaseUrl::try_from( "https://example.org/index.html#about" )?;
     /// assert_eq!( url.fragment( ), Some( "about" ) );
     ///# Ok( () )
@@ -761,6 +798,7 @@ impl BaseUrl {
     ///
     /// ```rust
     /// use base_url::{ BaseUrl, BaseUrlError, TryFrom };
+    ///
     ///# fn run( ) -> Result< ( ), BaseUrlError > {
     /// let mut url = BaseUrl::try_from( "https://example.org/foo?page=2" )?;
     ///
