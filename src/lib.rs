@@ -38,13 +38,16 @@ Once we have a BaseUrl we can do (almost) anything we could with a normal Url an
 admitting potential failures
 
 
-*/
+ */
+
+#[cfg( nightly )]
+compile_error!(
+    "For nightly builds use \"{git = 'https://github.com/bradymcd/rs-baseurl', branch = 'nightly'}\" as your dependency"
+);
 
 pub extern crate url;
 
-#[cfg( all( feature = "_try_from", not( feature = "nightly" ) ) )]
 pub extern crate try_from;
-#[cfg( all( feature = "_try_from", not( feature = "nightly" ) ) )]
 pub use try_from::TryFrom;
 
 #[cfg( feature = "robot_conversion" )]
@@ -86,7 +89,6 @@ impl From<BaseUrl> for Url {
     }
 }
 
-#[cfg( any( feature = "_try_from", feature = "nightly" ) )]
 impl TryFrom<Url> for BaseUrl {
     type Err = BaseUrlError;
     fn try_from( url: Url ) -> Result< Self, Self::Err > {
@@ -98,7 +100,6 @@ impl TryFrom<Url> for BaseUrl {
     }
 }
 
-#[cfg( any( feature = "_try_from", feature = "nightly" ) )]
 impl<'a> TryFrom<&'a str> for BaseUrl {
     type Err = BaseUrlError;
 

@@ -33,23 +33,9 @@ instead.
 
 ## Features
 
-One default feature exists, ```_try_from``` which adds the [try_from](https://crates.io/crates/try_from)
-crate and panic-free implementations of the standard set of conversions. If you are on nightly this
-feature should do nothing and the standard library implementation will be used instead. 
-
 There are 2 features which can be opted into ```robot_conversions``` and ```sitemap_conversions```.  
 Each of these features adds a conversion into the important types of the crates ```robotparser``` and 
 ```sitemap``` respectively.
 
 If you wish to add your own conversions (for a crate you don't own at least), look at those 
 implementations given in ```src/robotparser.rs``` and ```src/sitemap.rs```
-
-## What's Missing?
-
-This is at version 0.0.10 for a reason, there are things to be added before I'm comfortable claiming 
-this library is at a proper first version.  
-Tests should be added, even though this is mostly just a thin wrapper over the Url type proving
-that CannotBeBase errors are truly gone when using the library is something which should be done  
-Finally there are some functions which are still missing, anything which requires me to reimplement the ```parse()```
-function isn't being touched until I really need to, notably ```join()``` isn't available yet.  
-

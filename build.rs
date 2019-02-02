@@ -10,6 +10,7 @@ fn main( ) {
         Channel::Nightly => {
             println!( "cargo:rustc-cfg=nightly" );
         }
-        _ => {}
+        _ => { }
+
     }
 }
