@@ -35,5 +35,9 @@ use base_url::ParseError;
 use base_url::BaseUrlError;
 ```
 
-BaseUrl can be created by converting from a String or a Url using TryFrom. In cases where the source _is
-known_ to be well formed an implementation of From is also supplied.
+BaseUrl can be created by converting from a String or a Url using TryFrom. In cases where the source is
+known to be well formed an implementation of From is also supplied, but know that these implementations
+can panic.
+
+Once you have a BaseUrl you can do basically anything with it that you could with a normal Url so long
+as what you want to do wouldn't cause it to lose it's ability to be a base.
