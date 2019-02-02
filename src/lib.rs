@@ -351,7 +351,7 @@ impl BaseUrl {
     /// let url = BaseUrl::try_from( "https://brady:hunter3@example.org/" )?;
     /// assert_eq!( url.password( ), Some( "hunter3" ) );
     ///
-    /// let url - BaseUrl::try_from( "https://brady@example.org" )?;
+    /// let url = BaseUrl::try_from( "https://brady@example.org" )?;
     /// assert_eq!( url.password( ), None );
     ///# Ok( () )
     ///# }
