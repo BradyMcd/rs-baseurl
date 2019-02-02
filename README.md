@@ -10,8 +10,16 @@ creation. As such, a BaseUrl never fails when doing things like calling ```set_p
 
 In any Rust project managed by Cargo add the following to your Cargo.toml ```[dependencies]``` section:
 ```
-base_url="0.0.10"
+base_url="1.0.0"
 ```
+
+If you're building in nightly Rust it's suggested you instead use the nightly branch, this will avoid
+an uneeded dependency in ```try_from``` as well as possible name collisions between it and the std
+implementation.
+```
+base_url={ git='https://github.com/bradymcd/rs-baseurl', branch = 'nightly' }
+```
+
 The package exposes base_url which defines the BaseUrl structure at it's root and also re-exports the 
 content of the rust-url and try_from crates by default.
 ```rust
@@ -27,15 +35,5 @@ use base_url::ParseError;
 use base_url::BaseUrlError;
 ```
 
-BaseUrl can be created by converting from a String or a Url, these conversions are implemented using
-the standard ```From``` trait and can panic, the panic-free try_from implementations are recommended 
-instead.
-
-## Features
-
-There are 2 features which can be opted into ```robot_conversions``` and ```sitemap_conversions```.  
-Each of these features adds a conversion into the important types of the crates ```robotparser``` and 
-```sitemap``` respectively.
-
-If you wish to add your own conversions (for a crate you don't own at least), look at those 
-implementations given in ```src/robotparser.rs``` and ```src/sitemap.rs```
+BaseUrl can be created by converting from a String or a Url using TryFrom. In cases where the source _is
+known_ to be well formed an implementation of From is also supplied.

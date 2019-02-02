@@ -4,29 +4,11 @@ description = "A Url type which strictly cuts out errors related to parsing and 
 authors = ["Brady McDonough <brady.mcd.codes@gmail.com>"]
 repository = "https://github.com/bradymcd/rs-baseurl"
 license = "MIT"
-version = "0.0.10"
-build = "build.rs"
+version = "1.0.0"
 
 [dependencies]
 url = "^1.0.0"
-
-[dependencies.try_from]
-version = "0.2.2"
-optional = true
-
-[dependencies.robotparser]
-version = "^0.10.2"
-optional = true
-
-[dependencies.sitemap]
-version = "^0.3.0"
-optional = true
+try_from = "0.2.2"
 
 [build-dependencies]
 rustc_version = "^0.2.3"
- 
-[features]
-default = [ "_try_from" ]
-robot_conversion = ["robotparser"]
-sitemap_conversion = ["sitemap" ]
-_try_from = [ "try_from" ]

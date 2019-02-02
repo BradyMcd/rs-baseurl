@@ -40,21 +40,10 @@ admitting potential failures
 
  */
 
-#[cfg( nightly )]
-compile_error!(
-    "For nightly builds use \"{git = 'https://github.com/bradymcd/rs-baseurl', branch = 'nightly'}\" as your dependency"
-);
-
 pub extern crate url;
 
 pub extern crate try_from;
 pub use try_from::TryFrom;
-
-#[cfg( feature = "robot_conversion" )]
-pub mod robotparser;
-
-#[cfg( feature = "sitemap_conversion" )]
-pub mod sitemap;
 
 pub use url::{ Url, ParseError };
 
