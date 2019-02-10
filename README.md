@@ -35,13 +35,12 @@ from errors related to base suitability.
 ```
 use base_url::{ BaseUrl, BaseUrlError, Url, TryFrom };
 
-# fn run( ) -> Result< (), BaseUrlError > {
 let url:Url = Url::parse( "data:text/plain,Hello?World#" )?;
-
 assert!( BaseUrl::try_from( url ) == Err( BaseUrlError::CannotBeBase ) );
-# Ok( () )
-# }
-# run( );
+
+let url:Url = Url::parse( "https://example.org/" )?;
+let baseurl = BaseUrl::from( url )?;
+assert!( baseurl.as_str( ), "https://example.org/ " );
 ```
 
 Once we have a BaseUrl we can do (almost) anything we could with a normal Url and with fewer functions
