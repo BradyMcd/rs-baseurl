@@ -81,7 +81,7 @@ impl From<BaseUrl> for Url {
 impl TryFrom<Url> for BaseUrl {
     type Err = BaseUrlError;
     fn try_from( url: Url ) -> Result< Self, Self::Err > {
-        if url.cannot_be_a_base( ) {
+        if url.cannot_be_a_base( ) || !url.has_authority( ) {
             Err( BaseUrlError::CannotBeBase )
         } else {
             Ok( BaseUrl{ url: url } )
@@ -103,7 +103,7 @@ impl<'a> TryFrom<&'a str> for BaseUrl {
 /// This is a fallible conversion and CAN panic
 impl From<Url> for BaseUrl {
     fn from( url: Url ) -> Self {
-        if url.cannot_be_a_base( ) {
+        if url.cannot_be_a_base( ) || !url.has_authority( ) {
             panic!()
         }else{
             BaseUrl{ url: url }
