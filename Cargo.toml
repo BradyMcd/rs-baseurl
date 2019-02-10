@@ -9,6 +9,3 @@ version = "1.0.0"
 [dependencies]
 url = "^1.0.0"
 try_from = "0.2.2"
-
-[build-dependencies]
-rustc_version = "^0.2.3"
