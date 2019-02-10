@@ -1,6 +1,7 @@
 [package]
 name = "base_url"
-description = "A Url type which strictly cuts out errors related to parsing and host suitability after creation at the cost of some flexibility"
+description = "A wrapper around the Url type for web urls"
+readme = "README.md"
 authors = ["Brady McDonough <brady.mcd.codes@gmail.com>"]
 repository = "https://github.com/bradymcd/rs-baseurl"
 license = "MIT"
