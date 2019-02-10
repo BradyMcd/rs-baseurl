@@ -6,6 +6,8 @@ authors = ["Brady McDonough <brady.mcd.codes@gmail.com>"]
 repository = "https://github.com/bradymcd/rs-baseurl"
 license = "MIT"
 version = "1.0.0"
+keywords = ["url", "parser"]
+categories = ["web-programming", "encoding"]
 
 [dependencies]
 url = "^1.0.0"

@@ -7,11 +7,13 @@ given URL.
 
 ## What is a BaseUrl
 
-A BaseUrl can be converted from any Url which has a host following its scheme (and possibly 
-credentials) in roughly the form foo.bar. In practical terms, if you found it on the Internet it will 
-probably work and if you're referring to a resource 'somewhere else' it will probably work, mailto:
-being a notable exception. Internally any Url which returns false on a ```.cannot_be_a_base()``` call 
-will convert.
+A BaseUrl can be converted from any Url which can refer to a remote resource. In practical terms, if 
+you found it on the Internet it will probably work and if you're referring to a resource 'somewhere 
+else' it will probably work, mailto: being a notable exception. 
+
+Internally any Url which returns false on a ```.cannot_be_a_base()``` call and true on a 
+```.has_authority()``` call will convert. That means setting things like credentials and port numbers
+cannot fail and likewise setting the path relative to the host cannot fail.
 
 ## Acquiring a BaseUrl object
 
