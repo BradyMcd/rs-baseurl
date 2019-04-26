@@ -42,10 +42,9 @@ admitting potential failures
 
 pub extern crate url;
 
-pub extern crate try_from;
-pub use try_from::TryFrom;
-
 pub use url::{ Url, ParseError };
+
+pub use std::convert::TryFrom;
 
 use url::{ UrlQuery, PathSegmentsMut };
 use url::form_urlencoded::{Parse, Serializer};
@@ -79,8 +78,8 @@ impl From<BaseUrl> for Url {
 }
 
 impl TryFrom<Url> for BaseUrl {
-    type Err = BaseUrlError;
-    fn try_from( url: Url ) -> Result< Self, Self::Err > {
+    type Error = BaseUrlError;
+    fn try_from( url: Url ) -> Result< Self, Self::Error > {
         if url.cannot_be_a_base( ) || !url.has_authority( ) {
             Err( BaseUrlError::CannotBeBase )
         } else {
@@ -90,33 +89,12 @@ impl TryFrom<Url> for BaseUrl {
 }
 
 impl<'a> TryFrom<&'a str> for BaseUrl {
-    type Err = BaseUrlError;
+    type Error = BaseUrlError;
 
-    fn try_from( url: &'a str ) -> Result< Self, Self::Err > {
+    fn try_from( url: &'a str ) -> Result< Self, Self::Error > {
         match Url::parse( url ) {
             Ok( u ) => BaseUrl::try_from( u ),
             Err( e ) => Err( BaseUrlError::ParseError( e ) ),
-        }
-    }
-}
-
-/// This is a fallible conversion and CAN panic
-impl From<Url> for BaseUrl {
-    fn from( url: Url ) -> Self {
-        if url.cannot_be_a_base( ) || !url.has_authority( ) {
-            panic!()
-        }else{
-            BaseUrl{ url: url }
-        }
-    }
-}
-
-/// This is a fallible conversion and CAN panic
-impl<'a> From<&'a str> for BaseUrl {
-    fn from( url: &'a str ) -> Self {
-        match Url::parse( url ) {
-            Ok( u ) => BaseUrl::from( u ),
-            Err( _e ) => panic!(),
         }
     }
 }
