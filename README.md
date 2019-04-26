@@ -17,10 +17,9 @@ cannot fail and likewise setting the path relative to the host cannot fail.
 
 ## Acquiring a BaseUrl object
 
-A BaseUrl object may be acquired by either converting a Url or &str using TryFrom, in Stable this is
-accomplished by depending on [try_from](https://crates.io/crates/try_from). If a &str cannot be parsed
-into a Url object a BaseUrlError::ParseError will be returned which wraps the underlying ParseError 
-type implemented by rust-url.
+A BaseUrl object may be acquired by either converting a Url or &str using TryFrom. If a &str cannot be 
+parsed into a Url object a BaseUrlError::ParseError will be returned which wraps the underlying 
+ParseError type implemented by rust-url.
 
 ```
 use base_url::{ BaseUrl, BaseUrlError, Url, ParseError, TryFrom };
@@ -54,11 +53,4 @@ suitability the wrapped Url can be acquired using ```.from()```.
 In any Rust project managed by Cargo add the following to your Cargo.toml ```[dependencies]``` section:
 ```
 base_url="^1.0.0"
-```
-
-If you're building in nightly Rust it's suggested you instead use the nightly branch, this will avoid
-an uneeded dependency in the try_from crate as well as possible name collisions between it and the 
-standard implementation.
-```
-base_url={ git='https://github.com/bradymcd/rs-baseurl', branch = 'nightly' }
 ```
