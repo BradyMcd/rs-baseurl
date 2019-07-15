@@ -11,4 +11,4 @@ categories = ["web-programming", "encoding"]
 edition = "2018"
 
 [dependencies]
-url = "^1.0.0"
+url = "^1.7.2"
